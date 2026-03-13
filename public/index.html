@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white font-sans">
+    <div class="max-w-md mx-auto bg-gray-800 min-h-screen">
+        <div class="bg-blue-600 p-4 text-center font-bold">GAME WALLET: RS 1000</div>
+        <div class="p-10 text-center">
+            <p class="text-gray-400">Next Result In:</p>
+            <h1 class="text-6xl font-mono text-yellow-500" id="timer">30</h1>
+        </div>
+        <div class="grid grid-cols-2 gap-4 px-4">
+            <button class="bg-green-600 p-5 rounded-lg font-bold">GREEN</button>
+            <button class="bg-red-600 p-5 rounded-lg font-bold">RED</button>
+        </div>
+        <div id="res" class="mt-10 text-center text-xl font-bold"></div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        socket.on('timer', t => document.getElementById('timer').innerText = t);
+        socket.on('gameResult', d => {
+            document.getElementById('res').innerText = "Winner: " + d.color;
+            document.getElementById('res').style.color = d.color;
+        });
+    </script>
+</body>
+</html>
